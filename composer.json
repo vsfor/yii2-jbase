@@ -1,0 +1,19 @@
+{
+    "name": "jext/yii2-jeen",
+    "description": "yii2 packages base lib",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jeen",
+            "email": "jeen@vsfor.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "jext\\jeen\\": ""
+        }
+    }
+}

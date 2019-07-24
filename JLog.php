@@ -9,7 +9,9 @@ class JLog
      * 记录日志信息 dir 为相对日志目录的路径，如 form 或 model/user
      *
      * @param $msg
-     * @param $dir
+     * @param string $dir
+     * @return bool
+     * @throws \yii\base\Exception
      */
     public static function log($msg, $dir = '')
     {
@@ -31,20 +33,11 @@ class JLog
 
     public static function debug($msg, $dir = '')
     {
-        $path = \Yii::$app->getRuntimePath() . DIRECTORY_SEPARATOR . 'logs' . DIRECTORY_SEPARATOR;
-        if($dir != '') {
-            $path = $path .'debug'. DIRECTORY_SEPARATOR . $dir . DIRECTORY_SEPARATOR;
-            FileHelper::createDirectory($path, 0777);
-        }
-        $file = $path . date("Y-m-d") . '.log';
-        if(!file_exists($file)) { //文件不存在 则创建文件 并开放权限
-            @touch($file); @chmod($file,0777);
-        }
+        $dir = ($dir ? 'debug/'.$dir : 'debug');
         if(!is_string($msg) && !is_numeric($msg)) {
             $msg = Json::encode($msg, JSON_PRETTY_PRINT);
         }
-        $msg = date('y-m-d H:i:s | ') . $msg . PHP_EOL;
-        return error_log($msg, 3, $file);
+        return self::log($msg, $dir);
     }
 
     public static function exception(\Exception $e, $data = [],$dir='')

@@ -1,2 +1,2 @@
-# yii2-jeen
-jeen diy packages base lib for yii2
+# yii2-jbase
+diy packages base lib for yii2

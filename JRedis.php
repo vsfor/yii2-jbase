@@ -1,5 +1,5 @@
 <?php
-namespace jext\jeen;
+namespace jext\jbase;
 
 /**
  * Class JRedis
@@ -17,7 +17,6 @@ namespace jext\jeen;
     ],
 
  *
- * @package jext\jeen
  */
 class JRedis
 {

@@ -1,5 +1,6 @@
 {
-    "name": "jext/yii2-jeen",
+    "name": "jext/yii2-jbase",
+    "version": "1.0.0",
     "description": "yii2 packages base lib",
     "type": "library",
     "license": "MIT",
@@ -13,7 +14,7 @@
     "require": {},
     "autoload": {
         "psr-4": {
-            "jext\\jeen\\": ""
+            "jext\\jbase\\": ""
         }
     }
 }

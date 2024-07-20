@@ -1,7 +1,5 @@
 <?php
-namespace jext\jeen;
-use yii\helpers\FileHelper;
-use yii\helpers\Json;
+namespace jext\jbase;
 
 class JLog
 {
@@ -16,18 +14,16 @@ class JLog
     public static function log($msg, $dir = '')
     {
         $path = \Yii::$app->getRuntimePath() . DIRECTORY_SEPARATOR . 'logs' . DIRECTORY_SEPARATOR;
-        if($dir != '') {
+        if(!empty($dir)) {
             $path = $path . $dir . DIRECTORY_SEPARATOR;
-            FileHelper::createDirectory($path, 0777); 
+            JFun::dirExistOrMake($path);
         }
         $file = $path . date("Y-m-d") . '.log';
-        if(!file_exists($file)) { //文件不存在 则创建文件 并开放权限
-            @touch($file); @chmod($file,0777);
+        JFun::fileExistOrTouch($file);
+        if(!is_string($msg)) {
+            $msg = JFun::jsonEncode($msg);
         }
-        if(!is_string($msg) && !is_numeric($msg)) {
-            $msg = Json::encode($msg);
-        }
-        $msg = date('y-m-d H:i:s | ') . $msg . PHP_EOL;
+        $msg = JFun::getMicroDate('y-m-d H:i:s.v | ') . $msg . PHP_EOL;
         return error_log($msg, 3, $file);
     }
 
@@ -35,7 +31,7 @@ class JLog
     {
         $dir = ($dir ? 'debug/'.$dir : 'debug');
         if(!is_string($msg) && !is_numeric($msg)) {
-            $msg = Json::encode($msg, JSON_PRETTY_PRINT);
+            $msg = JFun::jsonEncode($msg, JSON_PRETTY_PRINT);
         }
         return self::log($msg, $dir);
     }
@@ -44,7 +40,7 @@ class JLog
     {
         $dir = ($dir ? 'exception/'.$dir : 'exception');
         if(!is_string($data) && !is_numeric($data)) {
-            $data = Json::encode($data);
+            $data = JFun::jsonEncode($data);
         }
         $msg = strval($data) . PHP_EOL;
         $msg .= $e->getFile() .':'. $e->getLine() . PHP_EOL;
